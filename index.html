@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Title</title>
+        <meta charset="utf-8">
+        <style>
+            @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+            @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+            @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+            body { font-family: 'Droid Serif'; }
+            h1, h2, h3 {
+                font-family: 'Yanone Kaffeesatz';
+                font-weight: normal;
+            }
+            .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+        </style>
+    </head>
+    <body>
+        <textarea id="source">
+
+            class: center, top
+
+            # Intro to Kotlin
+            ## Dann Webster
+            ## October 2016
+
+            ---
+
+            # Overview
+
+            1. Why Kotlin 
+            2. Basic Syntax
+            3.  
+
+            ---
+
+            # What about Java?
+
+            ---
+            # The JVM is very valuable
+
+            - Highly optimized 
+                - Performance
+                - Garbage Collection
+            - Well established industry
+                - Lots of Developers 
+                - Lots of Operational Knowledge 
+            - Well tested across platforms
+            - Open Source Code to cover every usecase
+
+            ---
+ 
+            # Java is getting creaky: Background
+            - JCP Process Breakdown in the Late 2000s
+            - Culture of "Enterprise Development"
+                - [Execution in the Kingdom of Nouns](http://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html)
+                - `HelmetProtectorProtectorInterfaceImplementationManager` 
+                - "Java is a Domain Specific Language for turning XML into Stack Traces"
+
+            ---
+
+            # Java is getting creaky: Verbosity
+            ```java
+            public Pair<A, B> {
+                private A a;
+                private B b;
+
+                public Pair(A a, B b) {
+                    this.a = a;
+                    this.b = b;
+                }
+
+                public A getA() {
+                    return this.a;
+                }
+
+                public B getB() {
+                    return this.b;
+                }
+
+                public String toString() {
+                    return String.format("Pair(%s, %s)", this.a, this.b);
+                }
+
+                public int hashCode() {
+                    int hashA = a == null ? 0 : a.hashCode();
+                    int hashB = b == null ? 0 : b.hashCode();
+                    return hashA * 17 + hashB * 37;
+                }
+
+                public boolean equals()_ {
+                }
+
+            }
+            ```
+
+            ---
+            # Java is getting creaky: Antipatterns
+
+            - Some well-intentioned ideas have been proven to be antipatterns
+                - Checked Exceptions
+                - Nullability
+                - Default assumptions about Public, Private, Package scope
+                - One file per type
+                - Mutable collections by default
+                - Class Level methods and variables (Static)
+            ---
+
+            # Java is getting creaky: Modernization
+
+            - Language held back by backwards compatibility
+            - Bolting on features
+                - Variadic signatures (Varargs)
+                - Generics
+                - Lambdas
+                - Streams
+                - Optionals
+
+            ---
+
+            # Looking for successor to Java on the JVM
+
+            - *Narrowly Used Attempts*
+                - *Rhino* (Javascript) - Node is just better
+                - *Jython* - Python is just better
+                - *JRuby* - Ruby is just better
+                - *Ceylon* - Too Academic, not production ready
+            - *More Successful Attempts*
+                - *Groovy* - Like Ruby and Java had a baby. Messy, poorly typed
+                - *Clojure* - Lisp on the JVM. Purely Functional
+                - *Scala* - Type Theory Gone Wild: Highly (overly) complicated, interop issues
+
+            ---
+
+            # 
+
+
+
+
+        </textarea>
+        <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+        </script>
+        <script>
+            var slideshow = remark.create();
+        </script>
+    </body>
+</html>
