@@ -1,19 +1,45 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Title</title>
+        <title>Intro to Kotlin</title>
         <meta charset="utf-8">
         <style>
             @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
             @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
             @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 
-            body { font-family: 'Droid Serif'; }
+            body { 
+                font-family: 'Droid Serif'; 
+            }
             h1, h2, h3 {
                 font-family: 'Yanone Kaffeesatz';
                 font-weight: normal;
             }
             .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+            .remark-slide-content {
+                background: PaleTurquoise;
+                font-size: 175%;
+            }
+            .remark-slide-content h1 {
+                font-family: 'Yanone Kaffeesatz';
+                font-weight: normal;
+                font-size: 250%;
+                color: navy;
+            }
+            .remark-slide-content ul li {
+                color: black;
+            }
+
+            .remark-slide-content ul li ul li{
+                color: dimGray;
+            }
+
+            .remark-slide-content blockquote {
+                color: royalBlue;
+                font-style: italic;
+            }
+
+                
         </style>
     </head>
     <body>
@@ -29,9 +55,11 @@
 
             # Overview
 
-            1. Why Kotlin 
-            2. Basic Syntax
-            3.  
+            1. What About Java?
+            2. Why Kotlin?
+            3. Basic Syntax
+            4. Spring Example 
+            5. Tooling
 
             ---
 
@@ -48,95 +76,185 @@
                 - Lots of Operational Knowledge 
             - Well tested across platforms
             - Open Source Code to cover every usecase
+            - Excellent Abstract Syntax Tree support
 
             ---
  
             # Java is getting creaky: Background
+            - Oracle Bought Sun
             - JCP Process Breakdown in the Late 2000s
-            - Culture of "Enterprise Development"
-                - [Execution in the Kingdom of Nouns](http://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html)
-                - `HelmetProtectorProtectorInterfaceImplementationManager` 
-                - "Java is a Domain Specific Language for turning XML into Stack Traces"
+
+            ---
+
+            # Java is getting creaky: "Enterprise Development"
+            > "Java is a Domain Specific Language for turning XML into Stack Traces" -  Bulat Shakirzyanov
+
+            Cultural, not Technological issue
+
+            - Spring Framework == Verbose Names
+            - Everything has an Interface, even if it has only one implementation
+            - `HelmetProtectorProtectorInterfaceImplementationManager` 
 
             ---
 
             # Java is getting creaky: Verbosity
             ```java
-            public Pair<A, B> {
+            public class Duple<A, B> {
                 private A a;
                 private B b;
-
-                public Pair(A a, B b) {
+                public Duple(A a, B b) {
                     this.a = a;
                     this.b = b;
                 }
-
-                public A getA() {
-                    return this.a;
-                }
-
-                public B getB() {
-                    return this.b;
-                }
-
+                public A getA() { return this.a; }
+                public B getB() { return this.b; }
+                @Override
                 public String toString() {
-                    return String.format("Pair(%s, %s)", this.a, this.b);
+                    return String.format("Duple(%s, %s)", this.a, this.b);
                 }
-
+                @Override
                 public int hashCode() {
                     int hashA = a == null ? 0 : a.hashCode();
                     int hashB = b == null ? 0 : b.hashCode();
                     return hashA * 17 + hashB * 37;
                 }
+                @Override
+                public boolean equals(Object o) {
+                    if (this == o) return true;
+                    if (o == null || getClass() != o.getClass()) return false;
 
-                public boolean equals()_ {
+                    Duple<?, ?> duple = (Duple<?, ?>) o;
+
+                    if (a != null ? !a.equals(duple.a) : duple.a != null) return false;
+                    return b != null ? b.equals(duple.b) : duple.b == null;
                 }
-
             }
             ```
 
             ---
             # Java is getting creaky: Antipatterns
 
-            - Some well-intentioned ideas have been proven to be antipatterns
-                - Checked Exceptions
-                - Nullability
-                - Default assumptions about Public, Private, Package scope
-                - One file per type
-                - Mutable collections by default
-                - Class Level methods and variables (Static)
+            Some well-intentioned ideas have been proven to be antipatterns
+
+            - Everything is an Object ([Execution in the Kingdom of Nouns](http://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html))
+            - Checked Exceptions
+            - Nullability
+            - Default assumptions about Public, Private, Package scope
+            - One file per type
+            - Mutable collections by default
+            - Class Level methods and variables (Static)
+
             ---
 
             # Java is getting creaky: Modernization
 
-            - Language held back by backwards compatibility
-            - Bolting on features
-                - Variadic signatures (Varargs)
-                - Generics
-                - Lambdas
-                - Streams
-                - Optionals
+            Language held back by backwards compatibility, so bolted-on features are less elegant than they could be
+
+            - Variadic signatures (Varargs)
+            - Generics
+            - Lambdas
+            - Streams
+            - Optionals
+
+            ---
+
+            # What's the Alternative?
+            ---
+
+            # Looking for successor to Java on the JVM
+
+            - *Language Ports*
+                - *Rhino* (Javascript) - Node is just better
+                - *Jython* - Python is just better
+                - *JRuby* - Ruby is just better
+                - *Clojure* - Lisp on the JVM. Purely Functional
 
             ---
 
             # Looking for successor to Java on the JVM
 
-            - *Narrowly Used Attempts*
-                - *Rhino* (Javascript) - Node is just better
-                - *Jython* - Python is just better
-                - *JRuby* - Ruby is just better
-                - *Ceylon* - Too Academic, not production ready
-            - *More Successful Attempts*
-                - *Groovy* - Like Ruby and Java had a baby. Messy, poorly typed
-                - *Clojure* - Lisp on the JVM. Purely Functional
-                - *Scala* - Type Theory Gone Wild: Highly (overly) complicated, interop issues
+            - *New, Hybrid Languages*
+                - *Ceylon* - Ceylon? Never heard of it
+                - *Groovy* - Like Ruby and Java had a baby. Messy, weakly typed, slow
+                - *Scala* - Type Theory Gone Wild: Highly (overly?) complicated, interop issues
 
             ---
 
-            # 
+            # Why Kotlin?
+
+            ---
+            # JMV Languages: The Good Parts
+
+            - Java Interoperability
+            - Builders from Groovy
+            - "Sane" Scala
+
+            ---
+
+            # [Why Kotlin is my Next Programming Language](https://medium.freecodecamp.com/why-kotlin-is-my-next-programming-language-c25c001e26e3#.a4bfcziy9)
+            - Ecosystem
+                - No runtime overhead (vs Groovy, Jython, etc)
+                - Partial adoption possible (Kotlin in Java projects)
+                - Works with existing toolchain (IDEs, Maven, Gradle, JUnit, etc)
+                - Industry focused, commercial support
+                - High Quality IDE Support
+                - Uses existing Frameworks
+
+            ---
+
+            # [Why Kotlin is my Next Programming Language](https://medium.freecodecamp.com/why-kotlin-is-my-next-programming-language-c25c001e26e3#.a4bfcziy9)
+            > "If something annoyed you about Java, I give it 50/50 that it’s fixed in Kotlin."  - Mike Hearn
+            - Features
+                - Excellent type inference
+                - Lean syntax
+                - Unchecked Exceptions
+                - Less boilerplate (data classes, delegates)
+                - Markdown for documentation
+                - Modern String interpolation
+                - Companion objects (like Scala)
+                - Clean operator overloading (like Groovy) 
+                - Null Safety (Optionals)
+                - Immutable by Default
+
+            ---
+
+            # Useful Kotlin
+
+            - *kotlin-test-junit* - JUnit Bindings
+            - *funKTional* - Monads (either, maybe, currying, partials, etc)
+            - *kotlin-gradle-plugin* - Gradle bindings
+            - *quasar* - Actors and Fibers 
+
+            ---
+
+            # To The Code!
+            ## aka Tempting the Demo Gods
+            ---
+
+            # Basic Syntax
+
+            1. Project Creation
+            2. Cut/Paste
+            1. Bowling Game Kata
+
+            ???
+
+            1. Create project using Maven
+            2. Copy Duple
 
 
+            ---
 
+            # Bowling Game
+
+            1. Gutter Game Should Score 0
+            2. All Ones Should Score 20
+            3. One Spare Should Get Extra Points For One Frame
+            4. One Strike Should Get Extra Points For Two Frames
+            5. Perfect Game Should Score 300
+            ---
+
+            # Spring Example
 
         </textarea>
         <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
